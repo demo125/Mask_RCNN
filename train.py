@@ -9,6 +9,8 @@ from mrcnn.utils import Dataset
 from mrcnn.utils import extract_bboxes
 from mrcnn.config import Config
 from mrcnn.model import MaskRCNN
+import os 
+import glob
 
 # class that defines and loads the kangaroo dataset
 class KangarooDataset(Dataset):
