@@ -93,12 +93,12 @@ class KangarooConfig(Config):
 
 # prepare train set
 train_set = KangarooDataset()
-train_set.load_dataset('kangaroo', is_train=True)
+train_set.load_dataset('./kidneys', is_train=True)
 train_set.prepare()
 print('Train: %d' % len(train_set.image_ids))
 # prepare test/val set
 test_set = KangarooDataset()
-test_set.load_dataset('kangaroo', is_train=False)
+test_set.load_dataset('./kidneys', is_train=False)
 test_set.prepare()
 print('Test: %d' % len(test_set.image_ids))
 # prepare config
