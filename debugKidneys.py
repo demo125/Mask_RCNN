@@ -23,6 +23,7 @@ class KangarooDataset(Dataset):
         dataset_dir = os.path.join(dirname, dataset_dir)
 
         files = glob.glob(os.path.join(dataset_dir, '**','*'), recursive=True)
+        
         image_id = 0
         for f in files:
             
