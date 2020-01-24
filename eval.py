@@ -75,7 +75,7 @@ class KangarooDataset(Dataset):
 			row_s, row_e = box[1], box[3]
 			col_s, col_e = box[0], box[2]
 			masks[row_s:row_e, col_s:col_e, i] = 1
-			class_ids.append(self.class_names.index('kangaroo'))
+			class_ids.append(self.class_names.index('kidney'))
 		return masks, asarray(class_ids, dtype='int32')
 
 	# load an image reference
@@ -117,12 +117,12 @@ def evaluate_model(dataset, model, cfg):
 
 # load the train dataset
 train_set = KangarooDataset()
-train_set.load_dataset('kidneys', is_train=True)
+train_set.load_dataset('./kidneys', is_train=True)
 train_set.prepare()
 print('Train: %d' % len(train_set.image_ids))
 # load the test dataset
 test_set = KangarooDataset()
-test_set.load_dataset('kidneys', is_train=False)
+test_set.load_dataset('./kidneys', is_train=False)
 test_set.prepare()
 print('Test: %d' % len(test_set.image_ids))
 # create config
