@@ -32,21 +32,14 @@ class KangarooDataset(Dataset):
                 if not os.path.isfile(xml):
                     xml = os.path.join(dataset_dir, 'empty.xml')
 
-                if is_train and int(image_id) >= 180:
-                    continue
-                
-                if not is_train and int(image_id) < 180:
-                    continue
+                if (is_train and int(image_id) <= 150) or (not is_train and int(image_id) >= 150):
 
-                img_path = f
-                ann_path = xml
-                self.add_image('dataset', image_id=image_id, path=img_path, annotation=ann_path)
+                    img_path = f
+                    ann_path = xml
+                    self.add_image('dataset', image_id=image_id, path=img_path, annotation=ann_path)
                 
                 image_id += 1
                 
-                # print(f)
-                # print(xml)
-                # print()
             
     def old():       
         # define one class
@@ -129,7 +122,7 @@ print('Train: %d' % len(train_set.image_ids))
 
 # test/val set
 test_set = KangarooDataset()
-test_set.load_dataset('kangaroo', is_train=False)
+test_set.load_dataset('./kidneys', is_train=False)
 test_set.prepare()
 print('Test: %d' % len(test_set.image_ids))
 
