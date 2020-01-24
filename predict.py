@@ -15,28 +15,26 @@ from mrcnn.utils import Dataset
 class KangarooDataset(Dataset):
 	# load the dataset definitions
 	def load_dataset(self, dataset_dir, is_train=True):
-		# define one class
-		self.add_class("dataset", 1, "kangaroo")
-		# define data locations
-		images_dir = dataset_dir + '/images/'
-		annotations_dir = dataset_dir + '/annots/'
-		# find all images
-		for filename in listdir(images_dir):
-			# extract image id
-			image_id = filename[:-4]
-			# skip bad images
-			if image_id in ['00090']:
-				continue
-			# skip all images after 150 if we are building the train set
-			if is_train and int(image_id) >= 150:
-				continue
-			# skip all images before 150 if we are building the test/val set
-			if not is_train and int(image_id) < 150:
-				continue
-			img_path = images_dir + filename
-			ann_path = annotations_dir + image_id + '.xml'
-			# add to dataset
-			self.add_image('dataset', image_id=image_id, path=img_path, annotation=ann_path)
+		self.add_class("dataset", 1, "kidney")
+		
+		dirname = os.path.dirname(__file__)
+		dataset_dir = os.path.join(dirname, dataset_dir)
+
+		files = glob.glob(os.path.join(dataset_dir, '**','*'), recursive=True)
+		
+		image_id = 0
+		for f in files:
+			
+			if f.endswith('.jpg'):
+				xml = f.replace('.jpg', '.xml')
+				if not os.path.isfile(xml):
+					xml = os.path.join(dataset_dir, 'empty.xml')
+
+				if (is_train and int(image_id) <= 150) or (not is_train and int(image_id) >= 150):
+
+					img_path = f
+					ann_path = xml
+					self.add_image('dataset', image_id=image_id, path=img_path, annotation=ann_path)
 
 	# load all bounding boxes for an image
 	def extract_boxes(self, filename):
@@ -137,12 +135,12 @@ def plot_actual_vs_predicted(dataset, model, cfg, n_images=5, save_dir=None):
 
 # load the train dataset
 train_set = KangarooDataset()
-train_set.load_dataset('kangaroo', is_train=True)
+train_set.load_dataset('kidneys', is_train=True)
 train_set.prepare()
 print('Train: %d' % len(train_set.image_ids))
 # load the test dataset
 test_set = KangarooDataset()
-test_set.load_dataset('kangaroo', is_train=False)
+test_set.load_dataset('kidneys', is_train=False)
 test_set.prepare()
 print('Test: %d' % len(test_set.image_ids))
 # create config
