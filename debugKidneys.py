@@ -41,29 +41,7 @@ class KangarooDataset(Dataset):
                 image_id += 1
                 
             
-    def old():       
-        # define one class
-        self.add_class("dataset", 1, "kangaroo")
-        # define data locations
-        images_dir = dataset_dir + '/images/'
-        annotations_dir = dataset_dir + '/annots/'
-        # find all images
-        for filename in listdir(images_dir):
-            # extract image id
-            image_id = filename[:-4]
-            # skip bad images
-            if image_id in ['00090']:
-                continue
-            # skip all images after 150 if we are building the train set
-            if is_train and int(image_id) >= 150:
-                continue
-            # skip all images before 150 if we are building the test/val set
-            if not is_train and int(image_id) < 150:
-                continue
-            img_path = images_dir + filename
-            ann_path = annotations_dir + image_id + '.xml'
-            # add to dataset
-            self.add_image('dataset', image_id=image_id, path=img_path, annotation=ann_path)
+
 
     # extract bounding boxes from an annotation file
     def extract_boxes(self, filename):
