@@ -128,9 +128,11 @@ def plot_actual_vs_predicted(dataset, model, cfg, n_images=5, save_dir=None):
 			rect = Rectangle((x1, y1), width, height, fill=False, color='red')
 			# draw the box
 			ax.add_patch(rect)
+   
+	if save_dir is not None:
+		pyplot.savefig(save_dir)
+	
 	# show the figure
-    if save_dir:
-        pyplot.savefig(save_dir)
 	pyplot.show()
 
 # load the train dataset
