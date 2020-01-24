@@ -82,56 +82,6 @@ class KangarooDataset(Dataset):
 		info = self.image_info[image_id]
 		return info['path']
 
-# # train set
-# train_set = KangarooDataset()
-# train_set.load_dataset('kangaroo', is_train=True)
-# train_set.prepare()
-# print('Train: %d' % len(train_set.image_ids))
-
-# # test/val set
-# test_set = KangarooDataset()
-# test_set.load_dataset('kangaroo', is_train=False)
-# test_set.prepare()
-# print('Test: %d' % len(test_set.image_ids))
-
-# image_id = 0
-# image = train_set.load_image(image_id)
-# print(image.shape)
-# # load image mask
-# mask, class_ids = train_set.load_mask(image_id)
-# print(mask.shape)
-# # plot image
-# pyplot.imshow(image)
-# # plot mask
-# pyplot.imshow(mask[:, :, 0], cmap='gray', alpha=0.5)
-# pyplot.savefig("./kangaroo1.png")
-
-# # plot first few images
-# for i in range(9):
-# 	# define subplot
-# 	pyplot.subplot(330 + 1 + i)
-# 	# plot raw pixel data
-# 	image = train_set.load_image(i)
-# 	pyplot.imshow(image)
-# 	# plot all masks
-# 	mask, _ = train_set.load_mask(i)
-# 	for j in range(mask.shape[2]):
-# 		pyplot.imshow(mask[:, :, j], cmap='gray', alpha=0.3)
-# # show the figure
-# pyplot.savefig('./kangaroos.png')
-
-
-# image_id = 1
-# # load the image
-# image = train_set.load_image(image_id)
-# # load the masks and the class ids
-# mask, class_ids = train_set.load_mask(image_id)
-# # extract bounding boxes from the masks
-# bbox = extract_bboxes(mask)
-# # display image with masks and bounding boxes
-# display_instances(image, bbox, mask, class_ids, train_set.class_names, save_dir="./instances.png")
-
-
 # define a configuration for the model
 class KangarooConfig(Config):
 	# define the name of the configuration

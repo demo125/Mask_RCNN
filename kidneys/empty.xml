@@ -1,0 +1,14 @@
+<annotation>
+	<folder>1</folder>
+	<filename>empty.jpg</filename>
+	<path>D:\diplomovka_data\data\all_data\1\empty.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>512</width>
+		<height>512</height>
+		<depth>1</depth>
+	</size>
+	<segmented>0</segmented>
+</annotation>
