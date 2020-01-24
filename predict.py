@@ -149,7 +149,7 @@ cfg = PredictionConfig()
 # define the model
 model = MaskRCNN(mode='inference', model_dir='./models', config=cfg)
 # load model weights
-model_path = './models/kangaroo_cfg20200124T1753/mask_rcnn_kangaroo_cfg_0005.h5'
+model_path = './models/kangaroo_cfg20200124T2138/mask_rcnn_kangaroo_cfg_0005.h5'
 model.load_weights(model_path, by_name=True)
 # plot predictions for train dataset
 plot_actual_vs_predicted(train_set, model, cfg, save_dir='./train.png')
