@@ -7,4 +7,4 @@ class TrainConfig(Config):
     # number of classes (background + kidney)
     NUM_CLASSES = 1 + 1
     # number of training steps per epoch
-    STEPS_PER_EPOCH = 131
+    STEPS_PER_EPOCH = 1
