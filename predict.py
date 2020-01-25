@@ -16,6 +16,7 @@ class KangarooDataset(Dataset):
 	# load the dataset definitions
 	def load_dataset(self, dataset_dir, is_train=True):
 		# define one class
+  
 		self.add_class("dataset", 1, "kangaroo")
 		# define data locations
 		images_dir = dataset_dir + '/images/'
