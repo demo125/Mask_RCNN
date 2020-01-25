@@ -36,6 +36,7 @@ class KidneyDataset(Dataset):
 					img_path = f
 					ann_path = xml
 					self.add_image('dataset', image_id=image_id, path=img_path, annotation=ann_path)
+				image_id += 1
 
 	# load all bounding boxes for an image
 	def extract_boxes(self, filename):
