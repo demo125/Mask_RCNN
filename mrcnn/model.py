@@ -1689,8 +1689,7 @@ def data_generator(dataset, config, shuffle=True, augment=False, augmentation=No
     while True:
         try:
             # Increment index to pick next image. Shuffle if at the start of an epoch.
-            print(len(image_ids))
-            print(image_ids)
+            
             image_index = (image_index + 1) % len(image_ids)
             if shuffle and image_index == 0:
                 np.random.shuffle(image_ids)
@@ -1807,6 +1806,8 @@ def data_generator(dataset, config, shuffle=True, augment=False, augmentation=No
         except (GeneratorExit, KeyboardInterrupt):
             raise
         except:
+            print(len(image_ids))
+            print(image_ids)
             # Log it and skip the image
             logging.exception("Error processing image {}".format(
                 dataset.image_info[image_id]))
