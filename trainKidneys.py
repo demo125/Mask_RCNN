@@ -23,6 +23,8 @@ config.display()
 # define the model
 model = MaskRCNN(mode='training', model_dir='./models', config=config)
 # load weights (mscoco) and exclude the output layers
-model.load_weights('./mask_rcnn_coco.h5', by_name=True, exclude=["mrcnn_class_logits", "mrcnn_bbox_fc",  "mrcnn_bbox", "mrcnn_mask"])
+model.load_weights(
+  '/content/Mask_RCNN/models/kidney_cfg20200125T1032/mask_rcnn_kidney_cfg_0063.h5', 
+by_name=True, exclude=["mrcnn_class_logits", "mrcnn_bbox_fc",  "mrcnn_bbox", "mrcnn_mask"])
 # train weights (output layers or 'heads')
-model.train(train_set, test_set, learning_rate=config.LEARNING_RATE, epochs=5, layers='heads')
+model.train(train_set, test_set, learning_rate=0.01, epochs=100, layers='5+')
