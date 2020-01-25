@@ -11,33 +11,32 @@ from mrcnn.utils import Dataset
 from mrcnn.utils import compute_ap
 from mrcnn.model import load_image_gt
 from mrcnn.model import mold_image
-
+import os 
+import glob
 # class that defines and loads the kangaroo dataset
 class KangarooDataset(Dataset):
 	# load the dataset definitions
 	def load_dataset(self, dataset_dir, is_train=True):
-		# define one class
-		self.add_class("dataset", 1, "kangaroo")
-		# define data locations
-		images_dir = dataset_dir + '/images/'
-		annotations_dir = dataset_dir + '/annots/'
-		# find all images
-		for filename in listdir(images_dir):
-			# extract image id
-			image_id = filename[:-4]
-			# skip bad images
-			if image_id in ['00090']:
-				continue
-			# skip all images after 150 if we are building the train set
-			if is_train and int(image_id) >= 150:
-				continue
-			# skip all images before 150 if we are building the test/val set
-			if not is_train and int(image_id) < 150:
-				continue
-			img_path = images_dir + filename
-			ann_path = annotations_dir + image_id + '.xml'
-			# add to dataset
-			self.add_image('dataset', image_id=image_id, path=img_path, annotation=ann_path)
+		self.add_class("dataset", 1, "kidney")
+		
+		dirname = os.path.dirname(__file__)
+		dataset_dir = os.path.join(dirname, dataset_dir)
+
+		files = glob.glob(os.path.join(dataset_dir, '**','*'), recursive=True)
+		
+		image_id = 0
+		for f in files:
+			
+			if f.endswith('.jpg'):
+				xml = f.replace('.jpg', '.xml')
+				if not os.path.isfile(xml):
+					xml = os.path.join(dataset_dir, 'empty.xml')
+
+				if (is_train and int(image_id) <= 150) or (not is_train and int(image_id) >= 150):
+
+					img_path = f
+					ann_path = xml
+					self.add_image('dataset', image_id=image_id, path=img_path, annotation=ann_path)
 
 	# extract bounding boxes from an annotation file
 	def extract_boxes(self, filename):
@@ -76,7 +75,7 @@ class KangarooDataset(Dataset):
 			row_s, row_e = box[1], box[3]
 			col_s, col_e = box[0], box[2]
 			masks[row_s:row_e, col_s:col_e, i] = 1
-			class_ids.append(self.class_names.index('kangaroo'))
+			class_ids.append(self.class_names.index('kidney'))
 		return masks, asarray(class_ids, dtype='int32')
 
 	# load an image reference
@@ -118,12 +117,12 @@ def evaluate_model(dataset, model, cfg):
 
 # load the train dataset
 train_set = KangarooDataset()
-train_set.load_dataset('kangaroo', is_train=True)
+train_set.load_dataset('./kidneys', is_train=True)
 train_set.prepare()
 print('Train: %d' % len(train_set.image_ids))
 # load the test dataset
 test_set = KangarooDataset()
-test_set.load_dataset('kangaroo', is_train=False)
+test_set.load_dataset('./kidneys', is_train=False)
 test_set.prepare()
 print('Test: %d' % len(test_set.image_ids))
 # create config
@@ -131,7 +130,8 @@ cfg = PredictionConfig()
 # define the model
 model = MaskRCNN(mode='inference', model_dir='./models', config=cfg)
 # load model weights
-model.load_weights('./models/kangaroo_cfg20200124T1753/mask_rcnn_kangaroo_cfg_0005.h5', by_name=True)
+model_path = './models/kangaroo_cfg20200124T2138/mask_rcnn_kangaroo_cfg_0005.h5'
+model.load_weights(model_path, by_name=True)
 # evaluate model on training dataset
 train_mAP = evaluate_model(train_set, model, cfg)
 print("Train mAP: %.3f" % train_mAP)
