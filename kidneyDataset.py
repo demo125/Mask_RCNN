@@ -31,7 +31,7 @@ class KidneyDataset(Dataset):
 				if not os.path.isfile(xml):
 					xml = os.path.join(dataset_dir, 'empty.xml')
 
-				if (is_train and int(image_id) <= 150) or (not is_train and int(image_id) >= 150):
+				if (is_train and int(image_id) <= 3500) or (not is_train and int(image_id) >= 3500):
 
 					img_path = f
 					ann_path = xml
